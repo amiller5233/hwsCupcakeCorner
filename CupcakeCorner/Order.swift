@@ -34,7 +34,7 @@ class Order: ObservableObject, Codable {
     @Published var zip = ""
     
     var hasValidAddress: Bool {
-        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+        if isValidAddressField(name) || isValidAddressField(streetAddress) || isValidAddressField(city) || isValidAddressField(zip) {
             return false
         }
 
@@ -86,5 +86,9 @@ class Order: ObservableObject, Codable {
         try container.encode(streetAddress, forKey: .streetAddress)
         try container.encode(city, forKey: .city)
         try container.encode(zip, forKey: .zip)
+    }
+    
+    func isValidAddressField(_ value: String) -> Bool {
+        value.trimmingCharacters(in: .whitespaces).isEmpty
     }
 }
